@@ -2,6 +2,8 @@ package project.ticket.shop.entity.item;
 
 import lombok.Getter;
 import lombok.Setter;
+import project.ticket.shop.entity.BaseByEntity;
+import project.ticket.shop.entity.BaseTimeEntity;
 
 import javax.persistence.*;
 
@@ -10,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
-public abstract class Item {
+public abstract class Item extends BaseTimeEntity {
 
     @Id
     @GeneratedValue
