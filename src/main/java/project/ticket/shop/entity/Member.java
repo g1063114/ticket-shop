@@ -7,13 +7,14 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Member extends BaseByEntity{
 
     @Id
@@ -27,11 +28,15 @@ public class Member extends BaseByEntity{
     @NotEmpty
     private String email;
 
+    @NotNull
+    private Integer age;
+
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
-    public Member(String username, String email) {
+    public Member(String username, String email, int age) {
         this.username = username;
         this.email = email;
+        this.age = age;
     }
 }

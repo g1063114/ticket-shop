@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import project.ticket.shop.repository.MemberRepository;
+import project.ticket.shop.service.MemberService;
 
 import javax.persistence.EntityManager;
 
@@ -20,10 +21,13 @@ class MemberTest {
     @Autowired
     MemberRepository memberRepository;
 
+    @Autowired
+    MemberService memberService;
+
     @Test
     public void BaseEntityTest(){
         // given
-        Member member = new Member("member1","g1063114@naver.com");
+        Member member = new Member("member1","g1063114@naver.com",28);
         memberRepository.save(member);
         em.persist(member);
 
@@ -36,7 +40,14 @@ class MemberTest {
         // then
         System.out.println("findMember = " + findMember.getCreatedDate());
         System.out.println("findMember = " + findMember.getLastModifiedDate());
-        System.out.println("findMember = " + findMember.getCreatedBy());
-        System.out.println("findMember = " + findMember.getLastModifiedBy());
+//        System.out.println("findMember = " + findMember);
+//        System.out.println("findMember = " + findMember.getLastModifiedBy());
+    }
+
+    @Test
+    public void enroll(){
+        // given
+        Member member = new Member("member1", "g1063114@naver.com", 28);
+
     }
 }
