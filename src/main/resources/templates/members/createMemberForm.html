@@ -3,6 +3,10 @@
 <head th:replace="fragments/header :: header" />
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .email_ok {color:#3fbf61; display: none;}
+        .email_exits {color:#cf1d4c; display: none;}
+    </style>
 </head>
 <body>
     <div class="container">
@@ -17,14 +21,41 @@
             <div class="form-group">
                 <label th:for="email">이메일</label>
                 <input type="text" th:field="*{email}" class="form-control" placeholder="이메일을 입력하세요"
-                        th:class="${#fields.hasErrors('email')}? 'form-control fieldError' : 'form-control'">
+                        th:class="${#fields.hasErrors('email')}? 'form-control fieldError' : 'form-control'" th:oninput="checkEmail()">
+                <span class="email_ok">사용 가능한 이메일 입니다.</span>
+                <span class="email_exits">이미 사용중인 이메일 입니다.</span>
             </div>
             <div class="form-group">
                 <label th:for="age">나이</label>
                 <input type="text" th:field="*{age}" class="form-control" placeholder="나이를 입력하세요">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" id="enroll" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    function checkEmail(){
+        var email = $("#email").val();
+        $.ajax({
+            url:'/members/check',
+            type:'post', //POST 방식으로 전달
+            data:{email:email},
+            success:function(chk){
+                if(chk=='true'){
+                    $('.email_ok').css("display","inline-block");
+                    $('.email_exits').css("display", "none");
+                    $('#enroll').css("display","inline-block");
+                } else{
+                    $('.email_exits').css("display", "inline-block");
+                    $('.email_ok').css("display","none");
+                    $('#enroll').css("display","none");
+                }
+            },
+            error:function(){
+                alert("error");
+            }
+        });
+    };
+</script>
 </html>

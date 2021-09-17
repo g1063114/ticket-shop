@@ -19,19 +19,16 @@ public class MemberService {
      */
     @Transactional
     public Long join(Member member){
-        int check = duplicateCheck(member);
-        if (check != -1){
-            memberRepository.save(member);
-        }
-        return member.getId();
+        Member saveMember = memberRepository.save(member);
+        return saveMember.getId();
     }
 
-    private int duplicateCheck(Member member) {
-        List<Member> findMember = memberRepository.findByEmail(member.getEmail());
+    public boolean duplicateCheck(String email){
+        List<Member> findMember = memberRepository.findByEmail(email);
         if(!findMember.isEmpty()){
-            return -1;
+            return false;
         }else{
-            return 0;
+            return true;
         }
     }
 }
