@@ -13,6 +13,7 @@ import project.ticket.shop.entity.Member;
 import project.ticket.shop.service.MemberService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -58,6 +59,9 @@ public class MemberController {
 
     @GetMapping("/members")
     public String memberList(Model model){
-        return null;
+        List<Member> members = memberService.memberList();
+        model.addAttribute("members",members);
+
+        return "members/memberList";
     }
 }
