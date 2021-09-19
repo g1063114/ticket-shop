@@ -1,9 +1,10 @@
-package project.ticket.shop.entity;
+package project.ticket.shop.entity.member;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import project.ticket.shop.entity.Member;
 import project.ticket.shop.repository.MemberRepository;
 import project.ticket.shop.service.MemberService;
 

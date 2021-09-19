@@ -13,6 +13,6 @@ import javax.persistence.Entity;
 @Setter
 public class Movie extends Item {
 
-    private String movieName;
     private String genre;
+    private Integer runningTime;
 }

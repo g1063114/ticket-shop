@@ -12,5 +12,5 @@ import javax.persistence.Entity;
 @DiscriminatorValue("S")
 public class Snack extends Item{
 
-    private String snackName;
+    private String category;
 }

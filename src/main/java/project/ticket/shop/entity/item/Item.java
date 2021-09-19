@@ -6,6 +6,8 @@ import project.ticket.shop.entity.BaseByEntity;
 import project.ticket.shop.entity.BaseTimeEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -19,7 +21,12 @@ public abstract class Item extends BaseTimeEntity {
     @Column(name = "item_id")
     private Long id;
 
+    @NotEmpty
     private String name;
-    private int price;
-    private int stock;
+
+    @NotNull
+    private Integer price;
+
+    @NotNull
+    private Integer stock;
 }
