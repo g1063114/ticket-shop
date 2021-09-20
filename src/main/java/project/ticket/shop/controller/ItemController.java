@@ -7,11 +7,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import project.ticket.shop.dto.ItemForm;
+import project.ticket.shop.entity.Member;
+import project.ticket.shop.entity.item.Item;
 import project.ticket.shop.entity.item.Movie;
 import project.ticket.shop.entity.item.Snack;
 import project.ticket.shop.service.ItemService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -50,5 +53,13 @@ public class ItemController {
             itemService.saveItem(snack);
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/items")
+    public String itemList(Model model){
+        List<Item> items = itemService.itemList();
+        model.addAttribute("items",items);
+
+        return "item/itemList";
     }
 }
