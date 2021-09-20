@@ -9,6 +9,13 @@
   <div th:replace="fragments/bodyHeader :: bodyHeader"/>
   <form role="form" action="/items/new" th:object="${itemForm}" method="post">
     <div class="form-group">
+      <select name="dis" id="dis" class="form-control">
+        <option value="">상품선택</option>
+        <option th:value="M" th:text="영화" >
+        <option th:value="S" th:text="음식" >
+      </select>
+    </div>
+    <div class="form-group">
       <label th:for="name">상품명</label>
       <input type="text" th:field="*{name}" class="form-control" placeholder="상품명을 입력하세요"
              th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'">

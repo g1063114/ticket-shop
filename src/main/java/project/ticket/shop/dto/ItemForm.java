@@ -26,4 +26,6 @@ public class ItemForm {
     private Integer runningTime;
 
     private String category;
+
+    private String dis;
 }
