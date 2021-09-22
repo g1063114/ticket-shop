@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import project.ticket.shop.repository.ItemRepository;
 import project.ticket.shop.service.ItemService;
 
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.EntityManager;
 
 import java.util.Optional;
@@ -76,7 +77,8 @@ class ItemTest {
         em.clear();
 
         // when
-        Optional<Item> findItem = itemRepository.findById(movie.getId());
-
+        Item item = itemRepository.findById(movie.getId()).get();
+        assertThat(item.getName()).isEqualTo("샹치와 텐 링즈의 전설");
+        System.out.println(item.getClass().getAnnotation(DiscriminatorColumn.class));
     }
 }

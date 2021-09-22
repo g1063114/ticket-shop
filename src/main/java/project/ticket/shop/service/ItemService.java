@@ -1,11 +1,13 @@
 package project.ticket.shop.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.ticket.shop.entity.item.Item;
 import project.ticket.shop.repository.ItemRepository;
 
+import javax.persistence.DiscriminatorColumn;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,8 +37,11 @@ public class ItemService {
     /*
      * 상품 수정
      */
-    public void updateItem(Long itemId, String name, int price, int stock, String genre, int runningTime, String category){
-        Optional<Item> findItem = itemRepository.findById(itemId);
-
+    @Transactional
+    public void updateItem(Long itemId, String name, int price, int stock){
+        Item findItem = itemRepository.findById(itemId).get();
+        findItem.setName(name);
+        findItem.setPrice(price);
+        findItem.setStock(stock);
     }
 }
