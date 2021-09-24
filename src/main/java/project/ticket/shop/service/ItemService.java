@@ -35,6 +35,14 @@ public class ItemService {
     }
 
     /*
+     * 상품 단일 출력
+     */
+    public Item findOne(Long id){
+        Optional<Item> findItem = itemRepository.findById(id);
+        return findItem.get();
+    }
+
+    /*
      * 상품 수정
      */
     @Transactional

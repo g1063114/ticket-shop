@@ -14,6 +14,8 @@ import project.ticket.shop.entity.item.Item;
 import project.ticket.shop.entity.item.Movie;
 import project.ticket.shop.entity.item.Snack;
 import project.ticket.shop.service.ItemService;
+import project.ticket.shop.service.MovieService;
+import project.ticket.shop.service.SnackService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -23,6 +25,8 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
+    private final MovieService movieService;
+    private final SnackService snackService;
 
     @GetMapping("/items/new")
     public String createItemForm(Model model){
@@ -66,8 +70,34 @@ public class ItemController {
     }
 
     @GetMapping("/items/{itemId}/edit")
+    public String updateItemForm(@PathVariable("itemId") Long itemId, Model model){
+        Item findOne = itemService.findOne(itemId);
+        Movie movieOne = movieService.findMovieOne(itemId).orElse(null);
+        Snack snackOne = snackService.findSnackOne(itemId).orElse(null);
+
+        ItemForm itemForm = new ItemForm();
+
+        itemForm.setId(findOne.getId());
+        itemForm.setName(findOne.getName());
+        itemForm.setPrice(findOne.getPrice());
+        itemForm.setStock(findOne.getStock());
+        if (movieOne !=  null ){
+            itemForm.setGenre(movieOne.getGenre());
+            itemForm.setRunningTime(movieOne.getRunningTime());
+        }
+        if (snackOne != null){
+            itemForm.setCategory(snackOne.getCategory());
+        }
+
+        model.addAttribute("form",itemForm);
+        return "item/updateItemForm";
+    }
+
+    @PostMapping("/items/{itemId}/edit")
     public String updateItem(@PathVariable("itemId") Long itemId, @ModelAttribute("form") ItemForm form){
         itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStock());
+        movieService.updateMovie(itemId, form.getGenre(), form.getRunningTime());
+        snackService.updateSnack(itemId, form.getCategory());
         return "redirect:/items";
     }
 }

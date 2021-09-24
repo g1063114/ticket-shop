@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class ItemForm {
 
+    private Long id;
+
     @NotEmpty(message = "이름은 필수 입력 항목입니다.")
     private String name;
 
