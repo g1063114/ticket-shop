@@ -29,4 +29,14 @@ public class OrderItem extends BaseByEntity{
 
     private int count;
     private int orderPrice;
+
+    // 주문 아이템 생성 메서드
+    public static OrderItem saveOrderItem(Item item, int count, int orderPrice){
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setCount(count);
+        orderItem.setOrderPrice(orderPrice);
+
+        return orderItem;
+    }
 }
