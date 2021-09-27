@@ -38,4 +38,9 @@ public abstract class Item extends BaseTimeEntity {
         }
         this.stock = currentStock;
     }
+
+    // 아이템 재고 증가
+    public void addStock(int stock){
+        this.stock += stock;
+    }
 }

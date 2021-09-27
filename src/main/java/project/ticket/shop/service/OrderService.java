@@ -1,15 +1,21 @@
 package project.ticket.shop.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.ticket.shop.dto.OrderDto;
+import project.ticket.shop.dto.OrderSearchForm;
 import project.ticket.shop.entity.Member;
 import project.ticket.shop.entity.Order;
+import project.ticket.shop.entity.OrderItem;
 import project.ticket.shop.entity.item.Item;
+import project.ticket.shop.entity.item.Snack;
 import project.ticket.shop.repository.ItemRepository;
 import project.ticket.shop.repository.MemberRepository;
 import project.ticket.shop.repository.OrderRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,10 +30,24 @@ public class OrderService {
      * 상품 주문
      */
     @Transactional
-    public void order(Long memberId, Long itemId, int count){
+    public Long order(Long memberId, Long itemId, int count){
         Member findMember = memberRepository.findById(memberId).get();
         Item findItem = itemRepository.findById(itemId).get();
 
-        Order order = new Order();
+        OrderItem orderItem = OrderItem.saveOrderItem(findItem, count, findItem.getPrice());
+
+        Order order = Order.saveOrder(findMember,orderItem);
+        
+        orderRepository.save(order);
+        return order.getId();
     }
+
+    /*
+     * 상품 출력
+     */
+    public List<OrderDto> orderList(OrderSearchForm orderSearchForm){
+        List<OrderDto> orderList = orderRepository.search(orderSearchForm);
+        return orderList;
+    }
+
 }

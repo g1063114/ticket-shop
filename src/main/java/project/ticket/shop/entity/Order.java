@@ -54,4 +54,12 @@ public class Order extends BaseByEntity{
         order.setCreatedDate(LocalDateTime.now());
         return order;
     }
+
+    // 주문 취소
+    public void cancel(){
+        this.setStatus(OrderStatus.CANCEL);
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
+    }
 }

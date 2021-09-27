@@ -4,9 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import project.ticket.shop.dto.OrderDto;
+import project.ticket.shop.dto.OrderSearchForm;
 import project.ticket.shop.entity.Member;
+import project.ticket.shop.entity.Order;
 import project.ticket.shop.entity.item.Item;
 import project.ticket.shop.service.ItemService;
 import project.ticket.shop.service.MemberService;
@@ -37,6 +41,16 @@ public class OrderController {
     public String saveOrder(@RequestParam("memberId") Long memberId,
                             @RequestParam("itemId") Long itemId,
                             @RequestParam("count") int count){
+        orderService.order(memberId, itemId, count);
 
+        return "redirect:/orders";
+    }
+
+    @GetMapping("/orders")
+    public String orderList(@ModelAttribute("orderSearch")OrderSearchForm orderSearchForm, Model model){
+        List<OrderDto> orders = orderService.orderList(orderSearchForm);
+
+        model.addAttribute("orders", orders);
+        return "order/orderList";
     }
 }

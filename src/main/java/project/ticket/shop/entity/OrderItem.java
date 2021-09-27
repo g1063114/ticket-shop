@@ -35,8 +35,15 @@ public class OrderItem extends BaseByEntity{
         OrderItem orderItem = new OrderItem();
         orderItem.setItem(item);
         orderItem.setCount(count);
-        orderItem.setOrderPrice(orderPrice);
+        orderItem.setOrderPrice(orderPrice * count);
+
+        item.removeStock(count);
 
         return orderItem;
+    }
+
+    // 주문 아이템 취소
+    public void cancel(){
+        getItem().addStock(count);
     }
 }
