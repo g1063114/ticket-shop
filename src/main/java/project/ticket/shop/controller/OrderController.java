@@ -3,10 +3,7 @@ package project.ticket.shop.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import project.ticket.shop.dto.OrderDto;
 import project.ticket.shop.dto.OrderSearchForm;
 import project.ticket.shop.entity.Member;
@@ -52,5 +49,12 @@ public class OrderController {
 
         model.addAttribute("orders", orders);
         return "order/orderList";
+    }
+
+    @PostMapping("/orders/{orderId}/cancel")
+    public String cancelOrder(@PathVariable("orderId")Long orderId){
+        orderService.cancelOrder(orderId);
+
+        return "redirect:/orders";
     }
 }

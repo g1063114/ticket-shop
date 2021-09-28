@@ -50,4 +50,13 @@ public class OrderService {
         return orderList;
     }
 
+    /*
+     * 상품 취소
+     */
+    @Transactional
+    public void cancelOrder(Long orderId){
+        Order findOrder = orderRepository.findById(orderId).get();
+        findOrder.cancel();
+    }
+
 }
