@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class OrderItem extends BaseByEntity{
 
     @Id

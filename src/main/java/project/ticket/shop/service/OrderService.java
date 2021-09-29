@@ -1,6 +1,7 @@
 package project.ticket.shop.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,8 +46,8 @@ public class OrderService {
     /*
      * 상품 출력
      */
-    public List<OrderDto> orderList(OrderSearchForm orderSearchForm){
-        List<OrderDto> orderList = orderRepository.search(orderSearchForm);
+    public Page<OrderDto> orderList(OrderSearchForm orderSearchForm, Pageable pageable){
+        Page<OrderDto> orderList = orderRepository.search(orderSearchForm, pageable);
         return orderList;
     }
 

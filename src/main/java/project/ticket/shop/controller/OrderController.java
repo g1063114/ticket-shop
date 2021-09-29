@@ -1,6 +1,8 @@
 package project.ticket.shop.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,8 +46,8 @@ public class OrderController {
     }
 
     @GetMapping("/orders")
-    public String orderList(@ModelAttribute("orderSearch")OrderSearchForm orderSearchForm, Model model){
-        List<OrderDto> orders = orderService.orderList(orderSearchForm);
+    public String orderList(@ModelAttribute("orderSearch")OrderSearchForm orderSearchForm, Model model, Pageable pageable){
+        Page<OrderDto> orders = orderService.orderList(orderSearchForm, pageable);
 
         model.addAttribute("orders", orders);
         return "order/orderList";

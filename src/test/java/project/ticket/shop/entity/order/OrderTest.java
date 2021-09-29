@@ -4,6 +4,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import project.ticket.shop.dto.OrderDto;
 import project.ticket.shop.dto.OrderSearchForm;
@@ -82,10 +84,10 @@ public class OrderTest {
         orderSearchForm.setOrderStatus(OrderStatus.ORDER);
         orderSearchForm.setMemberName("member1");
 
-        List<Order> findOrder = orderRepository.search(orderSearchForm);
+        PageRequest pageRequest = PageRequest.of(0,3);
+        Page<OrderDto> findOrder = orderRepository.search(orderSearchForm, pageRequest);
 
-        for (Order order1 : findOrder) {
-            System.out.println("order1 = " + order1.getMember().getUsername());
-        }
+        assertThat(findOrder.getSize()).isEqualTo(3);
+        System.out.println("findOrder = " + findOrder.getContent());
     }
 }

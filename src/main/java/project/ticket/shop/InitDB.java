@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import project.ticket.shop.entity.Member;
+import project.ticket.shop.entity.Order;
+import project.ticket.shop.entity.OrderItem;
+import project.ticket.shop.entity.item.Item;
 import project.ticket.shop.entity.item.Movie;
 import project.ticket.shop.entity.item.Snack;
 
@@ -40,6 +43,11 @@ public class InitDB {
             Snack snack = createSnack("콜라",2500,300,"음료");
             em.persist(snack);
 
+            OrderItem orderItem = OrderItem.saveOrderItem(movie, 2, 13000);
+            em.persist(orderItem);
+
+            Order order = Order.saveOrder(member1, orderItem);
+            em.persist(order);
         }
     }
 

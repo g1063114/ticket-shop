@@ -1,8 +1,12 @@
 package project.ticket.shop.repository;
 
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 import project.ticket.shop.dto.OrderDto;
 import project.ticket.shop.dto.OrderSearchForm;
@@ -27,8 +31,8 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom{
     }
 
     @Override
-    public List<OrderDto> search(OrderSearchForm orderSearchForm) {
-        List<OrderDto> result = queryFactory
+    public Page<OrderDto> search(OrderSearchForm orderSearchForm, Pageable pageable) {
+        QueryResults<OrderDto> results = queryFactory
                 .select(
                         new QOrderDto(
                                 order.id,
@@ -48,9 +52,14 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom{
                         memberNameEq(orderSearchForm.getMemberName()),
                         orderStatusEq(orderSearchForm.getOrderStatus())
                 )
-                .fetch();
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
 
-        return result;
+        List<OrderDto> content = results.getResults();
+        long total = results.getTotal();
+
+        return new PageImpl<>(content,pageable,total);
     }
 
     private BooleanExpression orderStatusEq(OrderStatus orderStatus) {
