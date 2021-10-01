@@ -90,5 +90,6 @@ public class OrderTest {
         assertThat(findOrder.getSize()).isEqualTo(3);
         assertThat(findOrder.getContent()).extracting("memberName").containsExactly("member1");
         System.out.println("findOrder = " + findOrder.getContent());
+        System.out.println("findOrder = " + findOrder.hasNext());
     }
 }
