@@ -93,5 +93,6 @@ public class OrderTest {
         System.out.println("findOrder = " + findOrder.hasNext());
         System.out.println("findOrder = " + findOrder.hasPrevious());
         System.out.println("findOrder = " + findOrder.getTotalPages());
+        System.out.println("findOrder = " + findOrder.getTotalElements());
     }
 }
