@@ -33,7 +33,9 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom{
     @Override
     public Page<OrderDto> search(OrderSearchForm orderSearchForm, Pageable pageable) {
         QueryResults<OrderDto> results = queryFactory
-                .select(
+                // DTO를 통해서 반환하는 이유는 단순 데이터만 전달하기 위해
+                // 엔티티를 그대로 사용하면 엔티티 변경시 전체적인 구조와 변경사항이 많아지기 때문에
+               .select(
                         new QOrderDto(
                                 order.id,
                                 member.username,
@@ -48,10 +50,15 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom{
                 .leftJoin(order.member, member)
                 .leftJoin(order.orderItems, orderItem)
                 .leftJoin(orderItem.item, item)
+                // where 검색조건을 메서드로 작성
+                // 관리하기 편하고 추가할때도 편함
                 .where(
                         memberNameEq(orderSearchForm.getMemberName()),
                         orderStatusEq(orderSearchForm.getOrderStatus())
                 )
+                .orderBy(order.createdDate.desc())
+                // 반환 타입이 Page
+                // paging처리에 대한 편리함 함수들 제공
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchResults();
