@@ -62,8 +62,10 @@ public class OrderTest {
 
     @Test
     public void orderSearch(){
+        // 기본 회원 생성
         Member member1 = new Member("member1", "g1063114@naver.com", 28);
 
+        // 상품 생성
         Movie movie = new Movie();
         movie.setName("샹치와 텐 링즈의 전설");
         movie.setPrice(13000);
@@ -71,22 +73,26 @@ public class OrderTest {
         movie.setGenre("액션");
         movie.setRunningTime(132);
 
+        // 영속성 컨텍스트에 영속
         em.persist(member1);
         em.persist(movie);
 
+        // 주문 생성 과정
         OrderItem orderItem = OrderItem.saveOrderItem(movie, 3, 13000);
-
         Order order = Order.saveOrder(member1,orderItem);
-
         orderRepository.save(order);
 
+        // 검색 조건을 설정해서 동적쿼리 적용하게 함
         OrderSearchForm orderSearchForm = new OrderSearchForm();
         orderSearchForm.setOrderStatus(OrderStatus.ORDER);
         orderSearchForm.setMemberName("member1");
 
+        // 페이지 파라미터 설정
         PageRequest pageRequest = PageRequest.of(0,3);
+        // 동적쿼리 적용한 search에서 DTO로 반환
         Page<OrderDto> findOrder = orderRepository.search(orderSearchForm, pageRequest);
 
+        // 검증
         assertThat(findOrder.getSize()).isEqualTo(3);
         assertThat(findOrder.getContent()).extracting("memberName").containsExactly("member1");
         System.out.println("findOrder = " + findOrder.getContent());

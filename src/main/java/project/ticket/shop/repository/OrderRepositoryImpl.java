@@ -56,6 +56,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom{
                         memberNameEq(orderSearchForm.getMemberName()),
                         orderStatusEq(orderSearchForm.getOrderStatus())
                 )
+                // 주문 최신순으로 정렬
                 .orderBy(order.createdDate.desc())
                 // 반환 타입이 Page
                 // paging처리에 대한 편리함 함수들 제공
