@@ -53,6 +53,9 @@
             </tbody>
         </table>
     </div>
+    <div th:if="${orders.totalPages > 0}" class="pagination" th:each="pageNumber : ${orders}">
+        <a th:href="@{/orders(size=${orders.size}, page=${pageNumber})}" th:text="${pageNumber}"></a>
+    </div>
     <div th:replace="fragments/footer :: footer"/>
 </div> <!-- /container -->
 </body>
