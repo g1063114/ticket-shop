@@ -14,6 +14,7 @@ import project.ticket.shop.entity.Order;
 import project.ticket.shop.entity.OrderItem;
 import project.ticket.shop.entity.OrderStatus;
 import project.ticket.shop.entity.item.Movie;
+import project.ticket.shop.entity.item.Snack;
 import project.ticket.shop.repository.OrderRepository;
 
 
@@ -73,14 +74,24 @@ public class OrderTest {
         movie.setGenre("액션");
         movie.setRunningTime(132);
 
+        Snack snack = new Snack();
+        snack.setName("콜라");
+        snack.setPrice(2500);
+        snack.setStock(1000);
+        snack.setCategory("음료");
+
         // 영속성 컨텍스트에 영속
         em.persist(member1);
         em.persist(movie);
+        em.persist(snack);
 
         // 주문 생성 과정
         OrderItem orderItem = OrderItem.saveOrderItem(movie, 3, 13000);
+        OrderItem orderItem2 = OrderItem.saveOrderItem(snack, 2, 2500);
         Order order = Order.saveOrder(member1,orderItem);
+        Order order2 = Order.saveOrder(member1,orderItem2);
         orderRepository.save(order);
+        orderRepository.save(order2);
 
         // 검색 조건을 설정해서 동적쿼리 적용하게 함
         OrderSearchForm orderSearchForm = new OrderSearchForm();
