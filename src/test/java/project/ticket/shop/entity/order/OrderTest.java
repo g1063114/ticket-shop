@@ -111,6 +111,6 @@ public class OrderTest {
         System.out.println("findOrder = " + findOrder.hasPrevious());
         System.out.println("findOrder = " + findOrder.getTotalPages());
         System.out.println("findOrder = " + findOrder.getTotalElements());
-
+        // 페이징 thymeleaf 고민중...
     }
 }
