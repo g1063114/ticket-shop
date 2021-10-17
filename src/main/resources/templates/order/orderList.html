@@ -54,7 +54,7 @@
         </table>
     </div>
     <div>
-        <a th:href="@{/orders(size=${orders.size}, page=${pageNumber})}" th:text="${pageNumber}"></a>
+        <a th:href="@{/orders(size=${orders.size}, page=10)}" th:text="${orders.getTotalPages()}"></a>
     </div>
     <div th:replace="fragments/footer :: footer"/>
 </div> <!-- /container -->
