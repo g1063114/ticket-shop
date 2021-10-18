@@ -54,7 +54,15 @@
         </table>
     </div>
     <div>
-        <a th:href="@{/orders(size=${orders.size}, page=10)}" th:text="${orders.getTotalPages()}"></a>
+
+        <ul class="pagination">
+            <li>
+                <a class="page-link" th:href="@{/orders(page=1)}">
+                    <span>&laquo;</span>
+                    <span class="sr-only">First</span>
+                </a>
+            </li>
+        </ul>
     </div>
     <div th:replace="fragments/footer :: footer"/>
 </div> <!-- /container -->

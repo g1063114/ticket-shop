@@ -30,7 +30,7 @@ public abstract class Item extends BaseTimeEntity {
     @NotNull
     private Integer stock;
 
-    // 아이템 재고 감소
+    // 상품 재고 감소
     public void removeStock(int stock){
         int currentStock = this.stock - stock;
         if( currentStock < 0 ){
@@ -39,7 +39,7 @@ public abstract class Item extends BaseTimeEntity {
         this.stock = currentStock;
     }
 
-    // 아이템 재고 증가
+    // 상품 재고 증가
     public void addStock(int stock){
         this.stock += stock;
     }
