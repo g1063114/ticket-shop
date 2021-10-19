@@ -57,9 +57,15 @@
 
         <ul class="pagination">
             <li>
-                <a class="page-link" th:href="@{/orders(page=1)}">
+                <a class="page-link" th:href="@{/orders(page=0)}">
                     <span>&laquo;</span>
                     <span class="sr-only">First</span>
+                </a>
+            </li>
+            <li>
+                <a class="page-link" th:href="@{/orders(page=${orders.getTotalPages()})}">
+                    <span>&raquo;</span>
+                    <span class="sr-only">Last</span>
                 </a>
             </li>
         </ul>

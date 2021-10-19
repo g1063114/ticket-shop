@@ -48,7 +48,8 @@ public class OrderController {
     }
 
     @GetMapping("/orders")
-    public String orderList(@ModelAttribute("orderSearch")OrderSearchForm orderSearchForm, Model model, Pageable pageable){
+    public String orderList(@ModelAttribute("orderSearch")OrderSearchForm orderSearchForm, Model model,
+                            @PageableDefault(page=0, size = 10) Pageable pageable){
         Page<OrderDto> orders = orderService.orderList(orderSearchForm, pageable);
 
         model.addAttribute("orders", orders);
